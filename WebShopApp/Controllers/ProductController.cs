@@ -70,6 +70,25 @@ namespace WebShopApp.Controllers
             return View(product);
         }
 
+        // GET: ProductController/Create
+        public ActionResult Create()
+        {
+            var product = new ProductCreateVM();
+            product.Brands = _brandService.GetBrands()
+            .Select(x => new BrandPairVM()
+            {
+                Id = x.Id,
+                Name = x.BrandName
+            }).ToList();
+            product.Categories = _categoryService.GetCategories()
+            .Select(x => new CategoryPairVM()
+            {
+                Id = x.Id,
+                Name = x.CategoryName
+            }).ToList();
+            return View(product);
+        }
+
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
